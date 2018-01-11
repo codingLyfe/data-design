@@ -7,6 +7,22 @@
 	</head>
 	<body>
 		<h1>Data Design</h1>
-		<img src = "images/rl-trade-entities-markup.jpg" alt = "entities markup">
+		<img src = "" alt = "">
+		<br>
+		<h2>Entities<span id = "blueColorTxt">(Blue)</span></h2>
+		<ul>
+			<li></li>
+			<li></li>
+		</ul>
+		<h2>Attributes<span id ="greenColorTxt">(Green)</span></h2>
+			<ul>
+				<li></li>
+				<li></li>
+			</ul>
+		<h2>Relationships<span id ="yellowColorTxt">(Green)</span></h2>
+		<ul>
+			<li></li>
+			<li></li>
+		</ul>
 	</body>
 </html>
