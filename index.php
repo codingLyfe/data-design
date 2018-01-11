@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<h1>Data Design</h1>
-		<img src = "" alt = "">
+		<img src = "images/dataDesign-markup.jpg" alt = "data design markup">
 		<br>
 		<h2>Entities<span id = "blueColorTxt">(Blue)</span></h2>
 		<ul>
