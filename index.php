@@ -9,20 +9,22 @@
 		<h1>Data Design</h1>
 		<img src = "images/dataDesign-markup.jpg" alt = "data design markup">
 		<br>
-		<h2>Entities<span id = "blueColorTxt">(Blue)</span></h2>
+		<h2><span id = "redColorTxt">Profile</span></h2>
 		<ul>
-			<li></li>
-			<li></li>
+			<li>profileName</li>
+			<li>profilePass</li>
+			<li>profileEmail</li>
 		</ul>
-		<h2>Attributes<span id ="greenColorTxt">(Green)</span></h2>
+		<h2><span id ="purpleColorTxt">Article</span></h2>
 			<ul>
-				<li></li>
-				<li></li>
+				<li>articleName</li>
+				<li>articleId</li>
+				<li>articleContent</li>
+				<li>articleDate</li>
 			</ul>
-		<h2>Relationships<span id ="yellowColorTxt">(Green)</span></h2>
+		<h2>Relationships</h2>
 		<ul>
-			<li></li>
-			<li></li>
+			<li>One profile can write many articles (1-to-n)</li>
 		</ul>
 	</body>
 </html>

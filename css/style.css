@@ -1,14 +1,10 @@
-#blueColorTxt {
+#redColorTxt {
 	font-size: 25px;
-	color: dodgerblue;
+	color: red;
 }
 
-#greenColorTxt {
+#purpleColorTxt {
 	font-size: 25px;
-	color: limegreen;
+	color: purple;
 }
 
-#yellowColorTxt {
-	font-size: 25px;
-	color: limegreen;
-}
