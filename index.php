@@ -26,6 +26,22 @@
 		<p>Precondition: Max has logged into his account</p>
 		<p>Post condition(s): Max logs out of his account feeling inspired to take some pictures!</p>
 
+		<div>
+			<ol>
+				<li>Max clicks on an article</li>
+				<li>The article loaded on Max's screen</li>
+				<li>Max clicks "clap" after reading the article</li>
+				<li>The site presents a message:
+					<blockquote>"Thanks for showing your support!"
+					<em>Click and hold to continue the applause.</em>
+					</blockquote>
+				</li>
+				<li>Max decides to hold the clap button for 10 seconds</li>
+				<li>The site shows how much applause Max gave</li>
+				<li>Satisfied, Max logs off</li>
+			</ol>
+		</div>
+
 		<img src = "images/dataDesign-markup.jpg" alt = "data design markup">
 		<br>
 		<h3><span id = "redColorTxt">Profile</span></h3>
@@ -44,6 +60,8 @@
 		<h2>Relationships</h2>
 		<ul>
 			<li>One profile can write many articles (1-to-n)</li>
+			<li>One profile can clap many times for each article (1-to-n)</li>
+			<li>Many profiles can "clap" for many articles (n-to-m)</li>
 		</ul>
 	</body>
 </html>
