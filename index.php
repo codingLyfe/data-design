@@ -15,11 +15,11 @@
 				<li>Intermediate user with macOS</li>
 				<li>New MacBook with external keyboard and mouse</li>
 				<li>Wanting to view and post ideas for new photography hobby</li>
-				<li>Wants a variety of content all in one place</li>
+				<li>Wants a variety of content</li>
 			</ul>
 
 		<h2>User Story</h2>
-		<p>As a weekly user, I want to see many different ideas</p>
+		<p>As a weekly user, I want to see many different ideas in one place</p>
 
 		<h2>Use Case</h2>
 		<p>Max Johnson views an article and "claps" to show his support after finding it gave him inspiration for his own project.</p>
@@ -29,7 +29,7 @@
 		<div>
 			<ol>
 				<li>Max clicks on an article</li>
-				<li>The article loaded on Max's screen</li>
+				<li>The article loads on Max's screen</li>
 				<li>Max clicks "clap" after reading the article</li>
 				<li>The site presents a message:
 					<blockquote>"Thanks for showing your support!"
@@ -46,21 +46,30 @@
 		<br>
 		<h3><span id = "redColorTxt">Profile</span></h3>
 		<ul>
+			<li>profileId</li>
 			<li>profileName</li>
-			<li>profilePass</li>
 			<li>profileEmail</li>
+			<!-- Hash and Salt used for password -->
+			<li>profileHash</li>
+			<li>profileSalt</li>
 		</ul>
-		<h3><span id ="purpleColorTxt">Article</span></h3>
+		<h3><span id = "purpleColorTxt">Article</span></h3>
 			<ul>
-				<li>articleName</li>
 				<li>articleId</li>
+				<li>articleAuthorId</li>
+				<li>articleTitle</li>
 				<li>articleContent</li>
 				<li>articleDate</li>
 			</ul>
-		<h2>Relationships</h2>
+		<h3>Clap (Weak/Try Hard Entity)</h3>
+			<ul>
+				<li>clapProfileId</li>
+				<li>clapArticleId</li>
+				<li>clapId</li>
+			</ul>
+		<h3>Relationships</h3>
 		<ul>
 			<li>One profile can write many articles (1-to-n)</li>
-			<li>One profile can clap many times for each article (1-to-n)</li>
 			<li>Many profiles can "clap" for many articles (n-to-m)</li>
 		</ul>
 	</body>
