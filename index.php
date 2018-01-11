@@ -12,10 +12,18 @@
 			<ul>
 				<li>Age: 34</li>
 				<li>Gender: Male</li>
-				<li>OS: macOS X</li>
+				<li>Intermediate user with macOS</li>
+				<li>New MacBook with external keyboard and mouse</li>
+				<li>Wanting to view and post ideas for new photography hobby</li>
+				<li>Wants a variety of content all in one place</li>
 			</ul>
-		<p>Max is an intermediate user on Apple products. He bought a Mac in order to use the built in multimedia editors for his photography.</p>
-		<p>Since Max is new to photography, he is looking for a platform to see others creativity and receive ideas for some new projects.</p>
+
+		<h2>User Story</h2>
+		<p>As a weekly user, I want to see many different ideas</p>
+
+		<h2>Uses Case</h2>
+		<p>Max Johnson @maxJohnson</p>
+
 		<img src = "images/dataDesign-markup.jpg" alt = "data design markup">
 		<br>
 		<h3><span id = "redColorTxt">Profile</span></h3>
