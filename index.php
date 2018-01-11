@@ -21,8 +21,10 @@
 		<h2>User Story</h2>
 		<p>As a weekly user, I want to see many different ideas</p>
 
-		<h2>Uses Case</h2>
-		<p>Max Johnson @maxJohnson</p>
+		<h2>Use Case</h2>
+		<p>Max Johnson views an article and "claps" to show his support after finding it gave him inspiration for his own project.</p>
+		<p>Precondition: Max has logged into his account</p>
+		<p>Post condition(s): Max logs out of his account feeling inspired to take some pictures!</p>
 
 		<img src = "images/dataDesign-markup.jpg" alt = "data design markup">
 		<br>
