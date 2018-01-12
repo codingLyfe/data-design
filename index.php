@@ -57,7 +57,7 @@
 		<h3><span id = "purpleColorTxt">Article</span></h3>
 			<ul>
 				<li>articleId (primary key)</li>
-				<li>articleAuthorId (foreign key from profile)</li>
+				<li>articleProfileId (foreign key from profile)</li>
 				<li>articleTitle</li>
 				<li>articleContent</li>
 				<li>articleDateTime</li>
