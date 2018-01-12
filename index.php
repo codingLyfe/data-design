@@ -64,8 +64,8 @@
 			</ul>
 		<h3>Clap (Weak/Try Hard Entity)</h3>
 			<ul>
-				<li>clapProfileId <strong>(foreign key from profile and article)</strong></li>
-				<li>clapArticleId <strong>(foreign key from profile and article)</strong></li>
+				<li>clapProfileId <strong>(foreign key from profile)</strong></li>
+				<li>clapArticleId <strong>(foreign key from article)</strong></li>
 				<li>clapId <strong>(unique key)</strong></li>
 			</ul>
 		<h3>Relationships</h3>
