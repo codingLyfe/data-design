@@ -19,7 +19,7 @@
 			</ul>
 
 		<h2>User Story</h2>
-		<p>As a weekly reader, I want to see creative art that will inspire me into a new project.</p>
+		<p>As a weekly reader, I want to see creative art that will inspire me for a new project.</p>
 
 		<h2>Use Case</h2>
 		<p>Max Johnson views an article and "claps" to show his support after finding it gave him inspiration for his own project.</p>
@@ -46,7 +46,7 @@
 		<br>
 		<h3><span id = "redColorTxt">Profile</span></h3>
 		<ul>
-			<li>profileId</li>
+			<li>profileId (primary key)</li>
 			<li>profileName</li>
 			<li>profileEmail</li>
 			<li>profileActivationToken</li>
@@ -56,8 +56,8 @@
 		</ul>
 		<h3><span id = "purpleColorTxt">Article</span></h3>
 			<ul>
-				<li>articleId</li>
-				<li>articleAuthorId</li>
+				<li>articleId (primary key)</li>
+				<li>articleAuthorId (foreign key from profile)</li>
 				<li>articleTitle</li>
 				<li>articleContent</li>
 				<li>articleDateTime</li>
