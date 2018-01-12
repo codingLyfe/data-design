@@ -46,9 +46,9 @@
 		<br>
 		<h3><span id = "redColorTxt">Profile</span></h3>
 		<ul>
-			<li>profileId (primary key)</li>
-			<li>profileName</li>
-			<li>profileEmail</li>
+			<li>profileId <strong>(primary key)</strong></li>
+			<li>profileName <strong>(unique key)</strong></li>
+			<li>profileEmail <strong>(unique key)</strong></li>
 			<li>profileActivationToken</li>
 			<!-- Hash and Salt used for password -->
 			<li>profileHash</li>
@@ -56,17 +56,17 @@
 		</ul>
 		<h3><span id = "purpleColorTxt">Article</span></h3>
 			<ul>
-				<li>articleId (primary key)</li>
-				<li>articleProfileId (foreign key from profile)</li>
+				<li>articleId <strong>(primary key)</strong></li>
+				<li>articleProfileId <strong>(foreign key from profile)</strong></li>
 				<li>articleTitle</li>
 				<li>articleContent</li>
 				<li>articleDateTime</li>
 			</ul>
 		<h3>Clap (Weak/Try Hard Entity)</h3>
 			<ul>
-				<li>clapProfileId</li>
-				<li>clapArticleId</li>
-				<li>clapId</li>
+				<li>clapProfileId <strong>(foreign key from profile and article)</strong></li>
+				<li>clapArticleId <strong>(foreign key from profile and article)</strong></li>
+				<li>clapId <strong>(unique key)</strong></li>
 			</ul>
 		<h3>Relationships</h3>
 		<ul>
