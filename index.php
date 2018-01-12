@@ -19,7 +19,7 @@
 			</ul>
 
 		<h2>User Story</h2>
-		<p>As a weekly user, I want to see creative art that will inspire me into a new project.</p>
+		<p>As a weekly reader, I want to see creative art that will inspire me into a new project.</p>
 
 		<h2>Use Case</h2>
 		<p>Max Johnson views an article and "claps" to show his support after finding it gave him inspiration for his own project.</p>
