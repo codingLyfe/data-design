@@ -73,5 +73,8 @@
 			<li>One profile can write many articles (1-to-n)</li>
 			<li>Many profiles can "clap" for many articles (n-to-m)</li>
 		</ul>
+		<h2>
+			<img src="images/data-design-erd.svg" alt = "Entity Relationship Diagram">
+		</h2>
 	</body>
 </html>
