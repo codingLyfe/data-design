@@ -83,6 +83,73 @@ class Profile {
 		//TODO: accessor and mutator for profileActivationToken
 
 	/**
+	 * accessor method for Profile Email
+	 *
+	 * @return string value of profileEmail
+	 **/
+	public function getProfileEmail(): string {
+		return $this->profileEmail;
+	}
+	/**
+	 * mutator method for email
+	 *
+	 * @param string $newProfileEmail new value of email
+	 * @throws \InvalidArgumentException if $newEmail is not a valid email or insecure
+	 * @throws \RangeException if $newEmail is > 128 characters
+	 * @throws \TypeError if $newEmail is not a string
+	 **/
+	public function setProfileEmail(string $newProfileEmail): void {
+		// verify the email is secure
+		$newProfileEmail = trim($newProfileEmail);
+		$newProfileEmail = filter_var($newProfileEmail, FILTER_VALIDATE_EMAIL);
+		if(empty($newProfileEmail) === true) {
+			throw(new \InvalidArgumentException("Profile Email is empty or insecure"));
+		}
+		// verify the email will fit in the database
+		if(strlen($newProfileEmail) > 128) {
+			throw(new \RangeException("Profile Email is too large"));
+		}
+		// store the email
+		$this->profileEmail = $newProfileEmail;
+	}
+
+	/**
+	 * accessor method for profileHash
+	 *
+	 * @return string value of hash
+	 **/
+	public function getProfileHash(): string {
+		return $this->profileHash;
+	}
+	/**
+	 * mutator method for profileHash on password
+	 *
+	 * @param string $newProfileHash
+	 * @throws \InvalidArgumentException if the hash is not secure
+	 * @throws \RangeException if the hash is not 128 characters
+	 * @throws \TypeError if profile hash is not a string
+	 **/
+	public function setProfileHash(string $newProfileHash): void {
+		//enforce that the hash is properly formatted
+		$newProfileHash = trim($newProfileHash);
+		$newProfileHash = strtolower($newProfileHash);
+		if(empty($newProfileHash) === true) {
+			throw(new \InvalidArgumentException("Profile Hash for password is empty or insecure"));
+		}
+		//enforce that the hash is a string representation of a hexadecimal
+		if(!ctype_xdigit($newProfileHash)) {
+			throw(new \InvalidArgumentException("profile password hash is empty or insecure"));
+		}
+		//enforce that the hash is exactly 128 characters.
+		if(strlen($newProfileHash) !== 128) {
+			throw(new \RangeException("profile hash must be 128 characters"));
+		}
+		//store the hash
+		$this->profileHash = $newProfileHash;
+	}
+
+
+	/**
 	 * accessor method for profileName
 	 *
 	 * @return string value of profileName
