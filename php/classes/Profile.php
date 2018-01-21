@@ -20,17 +20,40 @@ namespace Edu\Cnm\DataDesign;
 
 
 class Profile {
-
+	/**
+	 * Id for this Profile; this is a primary key
+	 * @var Uuid $profileId
+	 */
 		private $profileId;
 
+	/**
+	 * Name associate with the Profile
+	 * @var string $profileName
+	 */
 		private $profileName;
 
+	/**
+	 * verification token to verify email on profile
+	 * @var string $profileActivationToken
+	 */
 		private $profileActivationToken;
 
+	/**
+	 * email linked to profile
+	 * @var string $profileEmail
+	 */
 		private $profileEmail;
 
+	/**
+	 * Hash for Profile password
+	 * @var string $profileHash
+	 */
 		private $profileHash;
 
+	/**
+	 * Salt for Profile password
+	 * @var string $profileSalt
+	 */
 		private $profileSalt;
 
 }
