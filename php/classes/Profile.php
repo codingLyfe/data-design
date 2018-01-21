@@ -80,7 +80,40 @@ class Profile {
 			$this->profileId = $uuid;
 		}
 
-		//TODO: accessor and mutator for profileActivationToken
+	/**
+	 * accessor method for account activation token
+	 *
+	 * @return string value of the activation token
+	 */
+	public function getProfileActivationToken() : ?string {
+		return ($this->profileActivationToken);
+	}
+
+	/**
+	 * mutator method for account activation token
+	 *
+	 * @param string $newProfileActivationToken
+	 * @throws \InvalidArgumentException  if the token is not a string or insecure
+	 * @throws \RangeException if the token is not exactly 32 characters
+	 * @throws \TypeError if the activation token is not a string
+	 */
+	public function setProfileActivationToken(?string $newProfileActivationToken): void {
+		if($newProfileActivationToken === null) {
+			$this->profileActivationToken = null;
+			return;
+		}
+		$newProfileActivationToken = strtolower(trim($newProfileActivationToken));
+		if(ctype_xdigit($newProfileActivationToken) === false) {
+			throw(new\RangeException("User activation is not valid"));
+		}
+		//make sure user activation token is only 32 characters
+		if(strlen($newProfileActivationToken) !== 32) {
+			throw(new\RangeException("User activation token has to be 32 characters"));
+		}
+		$this->profileActivationToken = $newProfileActivationToken;
+	}
+
+
 
 	/**
 	 * accessor method for Profile Email
@@ -180,21 +213,29 @@ class Profile {
 		$this->profileName = $newProfileName;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	/**
+	 * mutator method for profile salt on password
+	 *
+	 * @param string $newProfileSalt
+	 * @throws \InvalidArgumentException if the salt is not secure
+	 * @throws \RangeException if the salt is not 64 characters
+	 * @throws \TypeError if the profile salt is not a string
+	 */
+	public function setProfileSalt(string $newProfileSalt): void {
+		//enforce that the salt is properly formatted
+		$newProfileSalt = trim($newProfileSalt);
+		$newProfileSalt = strtolower($newProfileSalt);
+		//enforce that the salt is a string representation of a hexadecimal
+		if(!ctype_xdigit($newProfileSalt)) {
+			throw(new \InvalidArgumentException("profile password hash is empty or insecure"));
+		}
+		//enforce that the salt is exactly 64 characters.
+		if(strlen($newProfileSalt) !== 64) {
+			throw(new \RangeException("profile salt must be 64 characters"));
+		}
+		//store the hash
+		$this->profileSalt = $newProfileSalt;
+	}
 
 
 }
