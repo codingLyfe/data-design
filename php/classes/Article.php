@@ -38,7 +38,7 @@ class Article {
 	 * date and time the article was published in a PHP date time object
 	 * @var \DateTime $articleDate
 	 **/
-	private $articleDate;
+	private $articleDateTime;
 
 
 //TODO: add constructor
@@ -115,29 +115,84 @@ class Article {
 	 * @throws \TypeError if $newArticleContent is not a string
 	 **/
 	public function setArticleContent(string $newArticleContent): void {
-		// verify the tweet content is secure
+		// verify the article content is secure
 		$newArticleContent = trim($newArticleContent);
 		$newArticleContent = filter_var($newArticleContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newArticleContent) === true) {
-			throw(new \InvalidArgumentException("article content is empty or insecure"));
+			throw(new \InvalidArgumentException("Article content is empty or insecure"));
 		}
 		// verify the article content will fit in the database
 		if(strlen($newArticleContent) > 500) {
-			throw(new \RangeException("article content too large"));
+			throw(new \RangeException("Article content too large"));
 		}
 		// store the article content
 		$this->articleContent = $newArticleContent;
 	}
 
 
+	/**
+	 * accessor method for article date
+	 *
+	 * @return \DateTime value of article date
+	 **/
+	public function getArticleDateTime(): \DateTime {
+		return ($this->articleDateTime);
+	}
+
+	/**
+	 * mutator method for article date
+	 *
+	 * @param \DateTime|string|null $newArticleDateTime article date as a DateTime object or string (or null to load the current DateTime)
+	 * @throws \InvalidArgumentException if $newArticleDateTime is not a valid object or string
+	 * @throws \RangeException if $newArticleDateTime is a date that does not exist
+	 **/
+	public function setArticleDateTime($newArticleDateTime = null): void {
+		// base case: if the date is null, use the current date and time
+		if($newArticleDateTime === null) {
+			$this->articleDateTime = new \DateTime();
+			return;
+		}
+		// store the like date using the ValidateDate trait
+		try {
+			$newArticleDateTime = self::validateDateTime($newArticleDateTime);
+		} catch(\InvalidArgumentException | \RangeException $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->articleDateTime = $newArticleDateTime;
+	}
 
 
+	/**
+	 * accessor method for article title
+	 *
+	 * @return string value of article title
+	 **/
+	public function getArticleTitle(): string {
+		return ($this->articleTitle);
+	}
 
-
-
-
-
-
-
+	/**
+	 * mutator method for article title
+	 *
+	 * @param string $newArticleTitle new value of article title
+	 * @throws \InvalidArgumentException if $enwArticleTitle is not a string or insecure
+	 * @throws \RangeException if $newArticleTitle is > 64 characters
+	 * @throws \TypeError if $newArticleTitle is not a string
+	 **/
+	public function setArticleTitle(string $newArticleTitle): void {
+		// verify the article title is secure
+		$newArticleTitle = trim($newArticleTitle);
+		$newArticleTitle = filter_var($newArticleTitle, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newArticleTitle) === true) {
+			throw(new \InvalidArgumentException("Article title is empty or insecure"));
+		}
+		// verify the article title will fit in the database
+		if(strlen($newArticleTitle) > 64) {
+			throw(new \RangeException("Article title too long"));
+		}
+		// store the article title
+		$this->articleTitle = $newArticleTitle;
+	}
 
 }
