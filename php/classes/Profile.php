@@ -2,7 +2,6 @@
 
 namespace Edu\Cnm\DataDesign;
 
-
 //getting undefined namespace error
 //use Ramsey\Uuid\Uuid;
 
@@ -11,12 +10,11 @@ namespace Edu\Cnm\DataDesign;
  *
  * This Profile can be considered an example of what might be stored in a User's Profile on Medium.
  *
- * @author Tristan Bennett tbennett19@cnm.edu
+ * @author Tristan Bennett <tbennett19@cnm.edu>
+ * @author Dylan McDonald <dmcdonald21@cnm.edu>
  * @version 4.0.0
  * @package Edu\Cnm\DataDesign
  */
-
-
 
 
 class Profile {
@@ -56,4 +54,27 @@ class Profile {
 	 */
 		private $profileSalt;
 
+
+	/**
+	 * accessor for ProfileId
+	 * @return Uuid for ProfileId
+	 */
+		public function getProfileId() : Uuid {
+			return ($this->profileId);
+		}
+
+	/**
+	 * mutator for ProfileId
+	 * @param Uluid/string $newProfileId is a new value for ProfileId
+	 * @throws \RangeException if $newProfileId is not positive
+	 * @throws \TypeError if $newProfileId is not a Uuid or string
+	 */
+		public function setProfileId($newProfileId) : void {
+			try {
+				$uuid = self::validateUuid($newProfileId);
+				} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+				$exceptionType = get_class($exception);
+				throw(new $exceptionType($exception->getMessage(), 0, $exception));
+			}
+		}
 }
