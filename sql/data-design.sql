@@ -1,8 +1,8 @@
 ALTER DATABASE tbennett19 CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
- DROP TABLE IF EXISTS clap;
- DROP TABLE IF EXISTS article;
- DROP TABLE IF EXISTS profile;
+ -- DROP TABLE IF EXISTS clap;
+ -- DROP TABLE IF EXISTS article;
+ -- DROP TABLE IF EXISTS profile;
 
 -- creating profile table
 CREATE TABLE profile (
