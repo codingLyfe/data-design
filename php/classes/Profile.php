@@ -76,5 +76,58 @@ class Profile {
 				$exceptionType = get_class($exception);
 				throw(new $exceptionType($exception->getMessage(), 0, $exception));
 			}
+			//convert and store profileId
+			$this->profileId = $uuid;
 		}
+
+		//TODO: accessor and mutator for profileActivationToken
+
+	/**
+	 * accessor method for profileName
+	 *
+	 * @return string value of profileName
+	 **/
+	public function getProfileName(): string {
+		return ($this->profileName);
+	}
+	/**
+	 * mutator method for profileName
+	 *
+	 * @param string $newProfileName new value of profile Name
+	 * @throws \InvalidArgumentException if $newProfileName is not a string or insecure
+	 * @throws \RangeException if $newProfileName is > 32 characters
+	 * @throws \TypeError if $newProfileName is not a string
+	 **/
+	public function setProfileName(string $newProfileName) : void {
+		// verify the profile name is secure
+		$newProfileName = trim($newProfileName);
+		$newProfileName = filter_var($newProfileName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newProfileName) === true) {
+			throw(new \InvalidArgumentException("Profile Name is empty or insecure"));
+		}
+		// verify the profile name will fit in the database
+		if(strlen($newProfileName) > 32) {
+			throw(new \RangeException("Profile Name is too large"));
+		}
+		// store the Profile Name
+		$this->profileName = $newProfileName;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
