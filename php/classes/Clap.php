@@ -16,24 +16,24 @@ use Ramsey\Uuid\Uuid;
  * @author Tristan Bennett <tbennett19@cnm.edu>
  * @version 4.0.0
  * @package Edu\Cnm\DataDesign
- */
+ **/
 class Clap {
 	use ValidateDate;
 	use ValidateUuid;
 
 	/**
-	 * id for clap
+	 * id for clap : primary key
 	 * @var Uuid $clapId
-	 */
+	 **/
 	private $clapId;
 	/**
-	 * id of the article that this clap is for; this is a foreign key
+	 * id of the article that this clap is for; this is a foreign key that references article
 	 * @var Uuid $clapArticleId
 	 **/
 	private $clapArticleId;
 	/**
-	 * id of the Profile that sent this clap; this is a foreign key
-	 * @var Uuid $clapProfilId
+	 * id of the Profile that sent this clap; this is a foreign key that references profile
+	 * @var Uuid $clapProfiled
 	 **/
 	private $clapProfileId;
 

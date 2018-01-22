@@ -27,7 +27,7 @@ class Article {
 	 **/
 	private $articleId;
 	/**
-	 * this is the profile Id associated with this article: foreign key
+	 * this is the profile Id associated with this article: foreign key that references profile
 	 * @var Uuid $articleProfileId
 	 **/
 	private $articleProfileId;
