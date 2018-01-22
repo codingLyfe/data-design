@@ -216,6 +216,16 @@ class Profile {
 		$this->profileName = $newProfileName;
 	}
 
+
+	/**
+	 * accessor method for profileSalt
+	 *
+	 * @return string value of salt
+	 **/
+	public function getProfileSalt(): string {
+		return $this->profileSalt;
+	}
+
 	/**
 	 * mutator method for profile salt on password
 	 *
