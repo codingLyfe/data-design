@@ -207,8 +207,8 @@ class Article {
 	 * @param \DateTime|string|null $newDateTime date and time article was created
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
-	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
+	 * @throws \TypeError if data types violate type hints
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
 	public function __construct($newArticleId, $newArticleProfileId, string $newArticleContent, $newArticleDateTime = null) {
