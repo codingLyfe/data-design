@@ -8,6 +8,15 @@ require_once(dirname(__DIR__) . "autoload.php");
 use Ramsey\Uuid\Uuid;
 
 
+/**
+ * Cross section of Medium clap
+ *
+ * This is a cross section of what is likely stored when a profile "claps" for an article on Medium.
+ *
+ * @author Tristan Bennett <tbennett19@cnm.edu>
+ * @version 4.0.0
+ * @package Edu\Cnm\DataDesign
+ */
 class Clap {
 	use ValidateDate;
 	use ValidateUuid;
