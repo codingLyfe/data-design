@@ -41,8 +41,11 @@ class Article {
 	 * @var \DateTime $articleDate
 	 **/
 	private $articleDateTime;
-
-
+	/**
+	 * title of the published article
+	 * @var string $articleTitle
+	 **/
+	private $articleTitle;
 	/**
 	 * accessor method for Article id
 	 *
