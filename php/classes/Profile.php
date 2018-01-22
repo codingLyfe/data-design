@@ -1,6 +1,6 @@
 <?php
 
-namespace Edu\Cnm\DataDesign;
+namespace Edu\Cnm\Tbennett19\DataDesign;
 
 require_once("autoload.php");
 require_once(dirname(__DIR__) . "autoload.php");
