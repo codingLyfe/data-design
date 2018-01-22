@@ -5,8 +5,8 @@ namespace Edu\Cnm\DataDesign;
 require_once("autoload.php");
 require_once(dirname(__DIR__) . "autoload.php");
 
-//TODO: getting undefined namespace error
-//use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
+
 
 /**
  * Cross section of a "Medium" profile
@@ -68,7 +68,7 @@ class Profile {
 
 	/**
 	 * mutator for ProfileId
-	 * @param Uluid/string $newProfileId is a new value for ProfileId
+	 * @param Uuid/string $newProfileId is a new value for ProfileId
 	 * @throws \RangeException if $newProfileId is not positive
 	 * @throws \TypeError if $newProfileId is not a Uuid or string
 	 */

@@ -4,8 +4,10 @@ namespace Edu\Cnm\DataDesign;
 require_once("autoload.php");
 require_once(dirname(__DIR__) . "autoload.php");
 
-// TODO: get Ramsey to work
-//use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
+
+
+
 /**
  * Cross Section of a "Medium" article
  *
