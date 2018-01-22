@@ -14,6 +14,7 @@ use Ramsey\Uuid\Uuid;
  * This is a cross section of what is likely stored when a profile "claps" for an article on Medium.
  *
  * @author Tristan Bennett <tbennett19@cnm.edu>
+ * @author Dylan McDonald <dmcdonald21@cnm.edu>
  * @version 4.0.0
  * @package Edu\Cnm\DataDesign
  **/
