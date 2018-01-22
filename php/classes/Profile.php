@@ -242,31 +242,32 @@ class Profile {
 
 
 	/**
-	 * Constructor for article
+	 * Constructor for profile
 	 *
 	 * @param string|Uuid $newProfileId of this profile or null if a new profile
-	 * @param string|null $newProfileActivationToken
-	 * @param string $newArticleContent string containing content
-	 * @param \DateTime|string|null $newDateTime date and time article was created
+	 * @param string|null $newProfileActivationToken, can be null
+	 * @param string $newProfileEmail string containing email address
+	 * @param string $newProfileHash associated with password
+	 * @param string $newProfileName name attached to profile
+	 * @param string $newProfileSalt associated with password
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newArticleId, $newArticleProfileId, string $newArticleContent, $newArticleDateTime = null) {
+	public function __construct($newProfileId, $newProfileActivationToken, string $newProfileEmail, $newProfileHash, $newProfileName, $newProfileSalt) {
 		try {
-			$this->setArticleId($newArticleId);
-			$this->setArticleProfileId($newArticleProfileId);
-			$this->setArticleContent($newArticleContent);
-			$this->setDateTime($newArticleDateTime);
+			$this->setProfileId($newProfileId);
+			$this->setProfileActivationToken($newProfileActivationToken);
+			$this->setProfileEmail($newProfileEmail);
+			$this->setProfileHash($newProfileHash);
+			$this->setProfileName($newProfileName);
+			$this->setProfileSalt($newProfileSalt);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 	}
-
-//TODO: finish constructors...
-
 
 }
