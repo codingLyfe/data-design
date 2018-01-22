@@ -2,8 +2,8 @@
 namespace Edu\Cnm\DataDesign;
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
-//TODO: undefined namespace and class Uuid
-//use Ramsey\Uuid\Uuid;
+
+use Ramsey\Uuid\Uuid;
 /**
  * Trait to validate a uuid
  *
