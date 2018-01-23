@@ -206,7 +206,7 @@ class Article implements \JsonSerializable{
 	 * @param string|Uuid $newArticleId of this article or null if a new article
 	 * @param string|Uuid $newArticleProfileId of the profile that created this article
 	 * @param string $newArticleContent string containing content
-	 * @param \DateTime|string|null $newDateTime date and time article was created
+	 * @param \DateTime|string|null $newArticleDateTime date and time article was created
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \Exception if some other exception occurs
