@@ -1,7 +1,7 @@
 <?php
-namespace Edu\Cnm\DataDesign;
-require_once(dirname(__DIR__, 2) . "../vendor/autoload.php");
+namespace Edu\Cnm\Tbennett19\DataDesign;
 
+require_once(dirname(__DIR__, 2) . "../vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 /**
