@@ -3,7 +3,7 @@
 namespace Edu\Cnm\Tbennett19\DataDesign;
 
 require_once("autoload.php");
-require_once(dirname(__DIR__) . "autoload.php");
+require_once(dirname(__DIR__, 2) . "classes/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
@@ -20,7 +20,7 @@ use Ramsey\Uuid\Uuid;
  */
 
 
-class Profile {
+class Profile implements \JsonSerializable {
 	/**
 	 * Id for this Profile; this is a primary key
 	 * @var Uuid $profileId
@@ -280,4 +280,17 @@ class Profile {
 		}
 	}
 
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["profileId"] = $this->profileId->toString();
+		unset($fields["profileActivationToken"]);
+		unset($fields["profileHash"]);
+		unset($fields["profileSalt"]);
+		return ($fields);
+	}
 }

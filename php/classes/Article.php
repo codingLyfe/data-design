@@ -2,7 +2,7 @@
 namespace Edu\Cnm\Tbennett19\DataDesign;
 
 require_once("autoload.php");
-require_once(dirname(__DIR__) . "autoload.php");
+require_once(dirname(__DIR__, 2) . "classes/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
@@ -18,7 +18,7 @@ use Ramsey\Uuid\Uuid;
  * @version 4.0.0
  * @package Edu\Cnm\DataDesign
  **/
-class Article {
+class Article implements \JsonSerializable{
 	use ValidateDate;
 	use ValidateUuid;
 	/**
@@ -223,6 +223,20 @@ class Article {
 		}
 	}
 
-
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["articleId"] = $this->articleId;
+		$fields["articleProfileId"] = $this->articleProfileId;
+		$fields["articleContent"] = $this->articleContent;
+		$fields["articleTitle"] = $this->articleTitle;
+		//format the date so that the front end can consume it
+		$fields["articleDateTime"] = round(floatval($this->articleDateTime->format("U.u")) * 1000);
+		return($fields);
+	}
 
 }
