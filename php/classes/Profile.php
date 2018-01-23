@@ -3,8 +3,10 @@
 namespace Edu\Cnm\Tbennett19\DataDesign;
 
 require_once("autoload.php");
-require_once(dirname(__DIR__, 2) . "classes/autoload.php");
+require_once(dirname(__DIR__, 2) . "../vendor/autoload.php");
 
+use Edu\Cnm\DataDesign\ValidateDate;
+use Edu\Cnm\DataDesign\ValidateUuid;
 use Ramsey\Uuid\Uuid;
 
 
@@ -21,6 +23,8 @@ use Ramsey\Uuid\Uuid;
 
 
 class Profile implements \JsonSerializable {
+	use ValidateDate;
+	use ValidateUuid;
 	/**
 	 * Id for this Profile; this is a primary key
 	 * @var Uuid $profileId
