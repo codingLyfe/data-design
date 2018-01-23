@@ -218,7 +218,7 @@ class Article implements \JsonSerializable{
 			$this->setArticleId($newArticleId);
 			$this->setArticleProfileId($newArticleProfileId);
 			$this->setArticleContent($newArticleContent);
-			$this->setDateTime($newArticleDateTime);
+			$this->setArticleDateTime($newArticleDateTime);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
