@@ -51,6 +51,33 @@ class Article implements \JsonSerializable{
 	 *
 	 * @return Uuid value of Article id
 	 **/
+
+	/**
+	 * Constructor for article
+	 *
+	 * @param string|Uuid $newArticleId of this article or null if a new article
+	 * @param string|Uuid $newArticleProfileId of the profile that created this article
+	 * @param string $newArticleContent string containing content
+	 * @param \DateTime|string|null $newArticleDateTime date and time article was created
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \Exception if some other exception occurs
+	 * @throws \TypeError if data types violate type hints
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 **/
+	public function __construct($newArticleId, $newArticleProfileId, string $newArticleContent, $newArticleDateTime = null) {
+		try {
+			$this->setArticleId($newArticleId);
+			$this->setArticleProfileId($newArticleProfileId);
+			$this->setArticleContent($newArticleContent);
+			$this->setArticleDateTime($newArticleDateTime);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
+
+
 	public function getArticleId(): Uuid {
 		return ($this->articleId);
 	}
@@ -195,32 +222,6 @@ class Article implements \JsonSerializable{
 		}
 		// store the article title
 		$this->articleTitle = $newArticleTitle;
-	}
-
-
-	/**
-	 * Constructor for article
-	 *
-	 * @param string|Uuid $newArticleId of this article or null if a new article
-	 * @param string|Uuid $newArticleProfileId of the profile that created this article
-	 * @param string $newArticleContent string containing content
-	 * @param \DateTime|string|null $newArticleDateTime date and time article was created
-	 * @throws \InvalidArgumentException if data types are not valid
-	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
-	 * @throws \Exception if some other exception occurs
-	 * @throws \TypeError if data types violate type hints
-	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
-	 **/
-	public function __construct($newArticleId, $newArticleProfileId, string $newArticleContent, $newArticleDateTime = null) {
-		try {
-			$this->setArticleId($newArticleId);
-			$this->setArticleProfileId($newArticleProfileId);
-			$this->setArticleContent($newArticleContent);
-			$this->setArticleDateTime($newArticleDateTime);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			$exceptionType = get_class($exception);
-			throw(new $exceptionType($exception->getMessage(), 0, $exception));
-		}
 	}
 
 	/**

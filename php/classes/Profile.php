@@ -27,25 +27,25 @@ class Profile implements \JsonSerializable {
 	 * Id for this Profile; this is a primary key
 	 * @var Uuid $profileId
 	 */
-		private $profileId;
+	private $profileId;
 
 	/**
 	 * verification token to verify email on profile
 	 * @var string $profileActivationToken
 	 */
-		private $profileActivationToken;
+	private $profileActivationToken;
 
 	/**
 	 * email linked to profile
 	 * @var string $profileEmail
 	 */
-		private $profileEmail;
+	private $profileEmail;
 
 	/**
 	 * Hash for Profile password
 	 * @var string $profileHash
 	 */
-		private $profileHash;
+	private $profileHash;
 
 	/**
 	 * Name associate with the Profile
@@ -57,16 +57,45 @@ class Profile implements \JsonSerializable {
 	 * Salt for Profile password
 	 * @var string $profileSalt
 	 */
-		private $profileSalt;
+	private $profileSalt;
 
+
+	/**
+	 * Constructor for profile
+	 *
+	 * @param string|Uuid $newProfileId of this profile or null if a new profile
+	 * @param string|null $newProfileActivationToken, can be null
+	 * @param string $newProfileEmail string containing email address
+	 * @param string $newProfileHash associated with password
+	 * @param string $newProfileName name attached to profile
+	 * @param string $newProfileSalt associated with password
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \Exception if some other exception occurs
+	 * @throws \TypeError if data types violate type hints
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 **/
+	public function __construct($newProfileId, $newProfileActivationToken, string $newProfileEmail, $newProfileHash, $newProfileName, $newProfileSalt) {
+		try {
+			$this->setProfileId($newProfileId);
+			$this->setProfileActivationToken($newProfileActivationToken);
+			$this->setProfileEmail($newProfileEmail);
+			$this->setProfileHash($newProfileHash);
+			$this->setProfileName($newProfileName);
+			$this->setProfileSalt($newProfileSalt);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
 
 	/**
 	 * accessor for ProfileId
 	 * @return Uuid for ProfileId
 	 */
-		public function getProfileId() : Uuid {
-			return ($this->profileId);
-		}
+	public function getProfileId() : Uuid {
+		return ($this->profileId);
+	}
 
 	/**
 	 * mutator for ProfileId
@@ -74,13 +103,13 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if $newProfileId is not positive
 	 * @throws \TypeError if $newProfileId is not a Uuid or string
 	 */
-		public function setProfileId($newProfileId) : void {
-			try {
-				$uuid = self::validateUuid($newProfileId);
-				} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-				$exceptionType = get_class($exception);
-				throw(new $exceptionType($exception->getMessage(), 0, $exception));
-			}
+	public function setProfileId($newProfileId) : void {
+		try {
+			$uuid = self::validateUuid($newProfileId);
+			} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
 			//convert and store profileId
 			$this->profileId = $uuid;
 		}
@@ -250,36 +279,6 @@ class Profile implements \JsonSerializable {
 		}
 		//store the hash
 		$this->profileSalt = $newProfileSalt;
-	}
-
-
-	/**
-	 * Constructor for profile
-	 *
-	 * @param string|Uuid $newProfileId of this profile or null if a new profile
-	 * @param string|null $newProfileActivationToken, can be null
-	 * @param string $newProfileEmail string containing email address
-	 * @param string $newProfileHash associated with password
-	 * @param string $newProfileName name attached to profile
-	 * @param string $newProfileSalt associated with password
-	 * @throws \InvalidArgumentException if data types are not valid
-	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
-	 * @throws \Exception if some other exception occurs
-	 * @throws \TypeError if data types violate type hints
-	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
-	 **/
-	public function __construct($newProfileId, $newProfileActivationToken, string $newProfileEmail, $newProfileHash, $newProfileName, $newProfileSalt) {
-		try {
-			$this->setProfileId($newProfileId);
-			$this->setProfileActivationToken($newProfileActivationToken);
-			$this->setProfileEmail($newProfileEmail);
-			$this->setProfileHash($newProfileHash);
-			$this->setProfileName($newProfileName);
-			$this->setProfileSalt($newProfileSalt);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			$exceptionType = get_class($exception);
-			throw(new $exceptionType($exception->getMessage(), 0, $exception));
-		}
 	}
 
 	/**

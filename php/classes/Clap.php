@@ -38,6 +38,28 @@ class Clap implements \JsonSerializable{
 	 **/
 	private $clapProfileId;
 
+	/**
+	 * Constructor for article
+	 *
+	 * @param string|Uuid $newClapId of this clap or null if a there is no clap
+	 * @param string|Uuid $newClapArticleId of the article that was claped, this is a foreign key referencing article
+	 * @param string $newClapProfileId of the profile that claped, foreign key referencing profile
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \Exception if some other exception occurs
+	 * @throws \TypeError if data types violate type hints
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 **/
+	public function __construct($newClapId, $newClapArticleId, $newClapProfileId) {
+		try {
+			$this->setClapId($newClapId);
+			$this->setClapArticleId($newClapArticleId);
+			$this->setClapProfileId($newClapProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
 
 	/**
 	 * accessor method for clap id
@@ -117,30 +139,6 @@ class Clap implements \JsonSerializable{
 		}
 		// convert and store the profile id
 		$this->clapProfileId = $uuid;
-	}
-
-
-	/**
-	 * Constructor for article
-	 *
-	 * @param string|Uuid $newClapId of this clap or null if a there is no clap
-	 * @param string|Uuid $newClapArticleId of the article that was claped, this is a foreign key referencing article
-	 * @param string $newClapProfileId of the profile that claped, foreign key referencing profile
-	 * @throws \InvalidArgumentException if data types are not valid
-	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
-	 * @throws \Exception if some other exception occurs
-	 * @throws \TypeError if data types violate type hints
-	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
-	 **/
-	public function __construct($newClapId, $newClapArticleId, $newClapProfileId) {
-		try {
-			$this->setClapId($newClapId);
-			$this->setClapArticleId($newClapArticleId);
-			$this->setClapProfileId($newClapProfileId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			$exceptionType = get_class($exception);
-			throw(new $exceptionType($exception->getMessage(), 0, $exception));
-		}
 	}
 
 	/**
