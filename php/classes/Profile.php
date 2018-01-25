@@ -300,6 +300,26 @@ class Profile implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * Deletes selected profile from mySQL
+	 *
+	 * @param \PDO $pdo connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+
+		// create query template
+		$query = "DELETE FROM profile WHERE profileID = :profileId";
+
+		// stops direct deletion
+		$statement = $pdo->prepare($query);
+
+		// binds binary value of profileId to placeholder for profileId
+		$parameters = ["profileId" => $this->profileId->getBytes()];
+		$statement->execute($parameters);
+	}
+
 
 	/**
 	 * formats the state variables for JSON serialization
