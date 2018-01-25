@@ -282,6 +282,26 @@ class Profile implements \JsonSerializable {
 	}
 
 	/**
+	 * inserts a new profile into mySQL
+	 * @param \PDO $pdo connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) : void {
+
+		// creates the query template. Ready to be formatted and inserted
+		$query = "INSERT INTO profile(profileId, profileActivationToken, profileEmail, profileHash, profileName, profileSalt) VALUES (:profileId, :profileActivationToken, :profileEmail, :profileHash, :profileName, :profileSalt)";
+
+		// stops direct insert for security reasons. Allows for further formatting.
+		$statement = $pdo->prepare($query);
+
+		// bind values of variables to respective placeholders in template
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileName => $this->profileName", "profileSalt" => $this->profileSalt];
+		$statement->execute($parameters);
+	}
+
+
+	/**
 	 * formats the state variables for JSON serialization
 	 *
 	 * @return array resulting state variables to serialize
