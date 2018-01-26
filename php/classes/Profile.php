@@ -339,8 +339,47 @@ class Profile implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * gets profile by profile id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $profileId profile id to search by
+	 * @return Profile|null Profile found or null if not found
+	 * @throws \PDOException when mySQL related error occurs
+	 * @throws \TypeError when a variable is not the correct data type
+	 **/
+	public static function getProfileByProfileId(\PDO $pdo, $profileId) : ?Profile {
+		// sanitize the profile before searching
+		try {
+			$profileId = self::validateUuid($profileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
 
+		// create query template
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileName, profileSalt WHERE profileId = :profileId";
 
+		// stops direct access to database for formatting
+		$statement = $pdo->prepare($query);
+
+		// bind the profile id to the place holder in the template
+		$parameters = ["profileId" => $profileId->getBytes()];
+		$statement->execute($parameters);
+
+		// grab the profile from mySQL
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileName"], $row["profileSalt"]);
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow the exception
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($profile);
+	}
 
 
 
