@@ -199,7 +199,7 @@ class Clap implements \JsonSerializable{
 		}
 
 		// create query template
-		$query = "SELECT clapId, clapArticleId, clapProfileId FROM  clap WHERE clapId = :clapId";
+		$query = "SELECT clapId, clapArticleId, clapProfileId FROM clap WHERE clapId = :clapId";
 
 		// stops direct access to database for formatting
 		$statement = $pdo->prepare($query);
@@ -222,6 +222,91 @@ class Clap implements \JsonSerializable{
 		}
 		return ($clap);
 	}
+
+	/**
+	 * gets clap by clap article id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $clapArticleId clap article id to search by
+	 * @return Clap|null Clap found or null if not found
+	 * @throws \PDOException when mySQL related error occurs
+	 * @throws \TypeError when a variable is not the correct data type
+	 **/
+	public static function getClapByClapArticleId(\PDO $pdo, $clapArticleId): ?Clap {
+		// sanitize the clap before searching
+		try {
+			$clapArticleId = self::validateUuid($clapArticleId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		// create query template
+		$query = "SELECT clapId, clapArticleId, clapProfileId FROM clap WHERE clapArticleId = :clapArticleId";
+
+		// stops direct access to database for formatting
+		$statement = $pdo->prepare($query);
+
+		// bind the clap article id to the place holder in the template
+		$parameters = ["clapArticleId" => $clapArticleId->getBytes()];
+		$statement->execute($parameters);
+
+		// grab the clap from mySQL
+		try {
+			$clap = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$clap = new Clap($row["clapId"], $row["clapArticleId"], $row["clapProfileId"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow the exception
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($clap);
+	}
+
+	/**
+	 * gets clap by clap profile id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $clapProfileId clap profile id to search by
+	 * @return Clap|null Clap found or null if not found
+	 * @throws \PDOException when mySQL related error occurs
+	 * @throws \TypeError when a variable is not the correct data type
+	 **/
+	public static function getClapByClapProfileId(\PDO $pdo, $clapProfileId): ?Clap {
+		// sanitize the clap before searching
+		try {
+			$clapProfileId = self::validateUuid($clapProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		// create query template
+		$query = "SELECT clapId, clapArticleId, clapProfileId FROM clap WHERE clapProfileId = :clapProfileId";
+
+		// stops direct access to database for formatting
+		$statement = $pdo->prepare($query);
+
+		// bind the clap profile id to the place holder in the template
+		$parameters = ["clapProfileId" => $clapProfileId->getBytes()];
+		$statement->execute($parameters);
+
+		// grab the clap from mySQL
+		try {
+			$clap = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$clap = new Clap($row["clapId"], $row["clapArticleId"], $row["clapProfileId"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow the exception
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($clap);
+	}
+
 
 	/**
 	 * formats the state variables for JSON serialization
