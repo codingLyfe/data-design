@@ -335,7 +335,7 @@ class Article implements \JsonSerializable{
 	 * @throws \PDOException when mySQL related error occurs
 	 * @throws \TypeError when a variable is not the correct data type
 	 **/
-	public static function getArticleByProfileId(\PDO $pdo, $articleProfileId) : \SplFixedArray {
+	public static function getArticleByArticleProfileId(\PDO $pdo, $articleProfileId) : \SplFixedArray {
 
 		// sanitize the article profile id before searching
 		try {
@@ -413,7 +413,47 @@ class Article implements \JsonSerializable{
 		return($articles);
 	}
 
+	/**
+	 * gets article by article title
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param String $articleTitle article title to search by
+	 * @return String|null Name of article found or null if not found
+	 * @throws \PDOException when mySQL related error occurs
+	 * @throws \TypeError when a variable is not the correct data type
+	 **/
+	public static function getArticleByArticleTitle(\PDO $pdo, $articleTitle) : ?string {
 
+		$articleTitle = trim($articleTitle);
+		$articleTitle = filter_var($articleTitle, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($articleTitle) === true) {
+			throw(new \PDOException("Article title is invalid"));
+		}
+
+		// escape mySQL wild cards
+		$articleTitle = str_replace("_", "\\_", str_replace("%", "\\%", $articleTitle));
+
+		// create query template
+		$query = "SELECT articleId, articleProfileId, articleContent, articleDateTime, articleTitle FROM article WHERE articleTitle LIKE :articleTitle";
+		$statement = $pdo->prepare($query);
+
+		// bind the article name to the place holder in the template
+		$parameters = ["articleTitle" => $articleTitle];
+		$statement->execute($parameters);
+
+		try {
+			$title = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$title = new Article($row["articleId"], $row["articleProfileId"], $row["articleContent"], $row["articleDateTime"], $row["articleTitle"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow the exception
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($title);
+	}
 
 
 
