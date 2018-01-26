@@ -326,7 +326,47 @@ class Article implements \JsonSerializable{
 		return ($article);
 	}
 
+	/**
+	 * gets article by profile profile id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param \SplFixedArray SplFixedArray of articles by profile id
+	 * @return \SplFixedArray SplFixedArray of articles by a profile id or null if none found
+	 * @throws \PDOException when mySQL related error occurs
+	 * @throws \TypeError when a variable is not the correct data type
+	 **/
+	public static function getArticleByProfileId(\PDO $pdo, $articleProfileId) : \SplFixedArray {
 
+		// sanitize the article profile id before searching
+		try {
+			$articleProfileId = self::validateUuid($articleProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		// create query template
+		$query = "SELECT articleId, articleProfileId, articleContent, articleDateTime, articleTitle FROM article WHERE articleProfileId = :articleProfileId";
+		$statement = $pdo->prepare($query);
+
+		// bind the profile activation token to the place holder in the template
+		$parameters = ["articleProfileId" => $articleProfileId];
+		$statement->execute($parameters);
+
+		// build an array of profiles with profile activation tokens
+		$articles = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$article = new Article($row["articleId"], $row["articleProfileId"], $row["articleContent"], $row["articleDateTime"], $row["articleTitle"]);
+				$articles[$articles->key()] = $article;
+				$articles->next();
+			} catch(\Exception $exception) {
+				// if row couldn't be converted, rethrow the exception
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($articles);
+	}
 
 
 
