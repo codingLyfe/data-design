@@ -225,6 +225,86 @@ class Article implements \JsonSerializable{
 	}
 
 	/**
+	 * inserts a new article into mySQL
+	 * @param \PDO $pdo connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo): void {
+
+		// creates the query template. Ready to be formatted and inserted
+		$query = "INSERT INTO article(articleId, articleProfileId, articleContent, articleDateTime, articleTitle) VALUES (:articleId, :articleProfileId, :articleContent, :articleDateTime, :articleTitle)";
+
+		// stops direct insert for security reasons. Allows for further formatting.
+		$statement = $pdo->prepare($query);
+
+		// bind values of variables to respective placeholders in template
+		$formattedDateTime = $this->articleDateTime->format("Y-m-d H:i:s.u");
+		$parameters = ["articleId" => $this->articleId->getBytes(), "articleProfileId" => $this->articleProfileId->getBytes(), "articleContent" => $this->articleContent, "articleDateTime" => $this->$formattedDateTime, "articleTitle => $this->articleTitle"];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * Deletes selected article from mySQL
+	 *
+	 * @param \PDO $pdo connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo): void {
+
+		// create query template
+		$query = "DELETE FROM article WHERE articleId = :articleId";
+
+		// stops direct deletion
+		$statement = $pdo->prepare($query);
+
+		// binds binary value of articleId to placeholder for profileId
+		$parameters = ["profileId" => $this->profileId->getBytes()];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * Updates selected article from mySQL
+	 *
+	 * @param \PDO $pdo connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo): void {
+		// create query template
+		$query = "UPDATE article SET articleContent = :articleContent, articleDateTime = :articleDateTime, articleTitle = :articleTitle WHERE articleId = :articleId";
+
+		// stops direct update. Allows for formatting and for security
+		$statement = $pdo->prepare($query);
+
+		//binds values to placeholders for updating
+		$parameters = ["articleContent" => $this->articleContent, "articleDateTime" => $this->articleDateTime, "articleTitle" => $this->articleTitle];
+		$statement->execute($parameters);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/**
 	 * formats the state variables for JSON serialization
 	 *
 	 * @return array resulting state variables to serialize
