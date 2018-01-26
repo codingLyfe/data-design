@@ -307,11 +307,11 @@ class Article implements \JsonSerializable{
 		// stops direct access to database for formatting
 		$statement = $pdo->prepare($query);
 
-		// bind the profile id to the place holder in the template
+		// bind the article id to the place holder in the template
 		$parameters = ["articleId" => $articleId->getBytes()];
 		$statement->execute($parameters);
 
-		// grab the profile from mySQL
+		// grab the article id from mySQL
 		try {
 			$article = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -437,7 +437,8 @@ class Article implements \JsonSerializable{
 		$query = "SELECT articleId, articleProfileId, articleContent, articleDateTime, articleTitle FROM article WHERE articleTitle LIKE :articleTitle";
 		$statement = $pdo->prepare($query);
 
-		// bind the article name to the place holder in the template
+		// bind the article title to the place holder in the template
+		$articleTitle = "%$articleTitle%";
 		$parameters = ["articleTitle" => $articleTitle];
 		$statement->execute($parameters);
 
@@ -454,19 +455,6 @@ class Article implements \JsonSerializable{
 		}
 		return ($title);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	/**

@@ -496,6 +496,7 @@ class Profile implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the profile name to the place holder in the template
+		$profileName = "%$profileName%";
 		$parameters = ["profileName" => $profileName];
 		$statement->execute($parameters);
 

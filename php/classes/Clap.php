@@ -141,6 +141,10 @@ class Clap implements \JsonSerializable{
 		$this->clapProfileId = $uuid;
 	}
 
+
+
+
+
 	/**
 	 * formats the state variables for JSON serialization
 	 *
