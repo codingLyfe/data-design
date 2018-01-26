@@ -414,9 +414,10 @@ class Profile implements \JsonSerializable {
 
 		// build an array of profiles with profile activation tokens
 		$tokens = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$token = new ProfileActivationToken($row["profileId"], $row[$profileActivationToken], $row["profileEmail"], $row["profileName"]);
+				$token = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileName"]);
 				$tokens[$tokens->key()] = $token;
 				$tokens->next();
 			} catch(\Exception $exception) {
@@ -427,6 +428,90 @@ class Profile implements \JsonSerializable {
 		return($tokens);
 	}
 
+	/**
+	 * gets profile by profile email
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param String $profileEmail profile email to search by
+	 * @return String|null Email of profile found or null if not found
+	 * @throws \PDOException when mySQL related error occurs
+	 * @throws \TypeError when a variable is not the correct data type
+	 **/
+	public static function getProfileByEmail(\PDO $pdo, $profileEmail) : ?string {
+
+		$profileEmail = trim($profileEmail);
+		$profileEmail = filter_var($profileEmail, FILTER_SANITIZE_STRING, FILTER_VALIDATE_EMAIL);
+		if(empty($profileEmail) === true) {
+			throw(new \PDOException("Email is invalid"));
+		}
+
+		// escape mySQL wild cards
+		$profileEmail = str_replace("_", "\\_", str_replace("%", "\\%", $profileEmail));
+
+		// create query template
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileName FROM profile WHERE profileEmail LIKE :profileEmail";
+		$statement = $pdo->prepare($query);
+
+		// bind the profile email to the place holder in the template
+		$parameters = ["profileEmail" => $profileEmail];
+		$statement->execute($parameters);
+
+		try {
+			$email = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$email = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileName"], $row["profileSalt"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow the exception
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($email);
+	}
+
+
+	/**
+	 * gets profile by profile name
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param String $profileName profile name to search by
+	 * @return String|null Name of profile found or null if not found
+	 * @throws \PDOException when mySQL related error occurs
+	 * @throws \TypeError when a variable is not the correct data type
+	 **/
+	public static function getProfileByProfileName(\PDO $pdo, $profileName) : ?string {
+
+		$profileName = trim($profileName);
+		$profileName = filter_var($profileName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($profileName) === true) {
+			throw(new \PDOException("Profile name is invalid"));
+		}
+
+		// escape mySQL wild cards
+		$profileName = str_replace("_", "\\_", str_replace("%", "\\%", $profileName));
+
+		// create query template
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileName FROM profile WHERE profileName LIKE :profileName";
+		$statement = $pdo->prepare($query);
+
+		// bind the profile name to the place holder in the template
+		$parameters = ["profileName" => $profileName];
+		$statement->execute($parameters);
+
+		try {
+			$name = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$name = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileName"], $row["profileSalt"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow the exception
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($name);
+	}
 
 
 
