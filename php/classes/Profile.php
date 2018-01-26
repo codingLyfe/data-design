@@ -405,7 +405,7 @@ class Profile implements \JsonSerializable {
 		$profileActivationToken = str_replace("_", "\\_", str_replace("%", "\\%", $profileActivationToken));
 
 		// create query template
-		$query = "SELECT profileId, profileActivationToken, profileEmail, profileName FROM profile WHERE profileActivationToken LIKE :profileActivationToken";
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileName, profileSalt FROM profile WHERE profileActivationToken LIKE :profileActivationToken";
 		$statement = $pdo->prepare($query);
 
 		// bind the profile activation token to the place holder in the template
@@ -417,7 +417,7 @@ class Profile implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$token = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileName"]);
+				$token = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileName"], $row["profileSalt"]);
 				$tokens[$tokens->key()] = $token;
 				$tokens->next();
 			} catch(\Exception $exception) {
@@ -449,7 +449,7 @@ class Profile implements \JsonSerializable {
 		$profileEmail = str_replace("_", "\\_", str_replace("%", "\\%", $profileEmail));
 
 		// create query template
-		$query = "SELECT profileId, profileActivationToken, profileEmail, profileName FROM profile WHERE profileEmail LIKE :profileEmail";
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileName, profileSalt FROM profile WHERE profileEmail LIKE :profileEmail";
 		$statement = $pdo->prepare($query);
 
 		// bind the profile email to the place holder in the template
@@ -492,7 +492,7 @@ class Profile implements \JsonSerializable {
 		$profileName = str_replace("_", "\\_", str_replace("%", "\\%", $profileName));
 
 		// create query template
-		$query = "SELECT profileId, profileActivationToken, profileEmail, profileName FROM profile WHERE profileName LIKE :profileName";
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileName, profileSalt FROM profile WHERE profileName LIKE :profileName";
 		$statement = $pdo->prepare($query);
 
 		// bind the profile name to the place holder in the template
@@ -512,8 +512,6 @@ class Profile implements \JsonSerializable {
 		}
 		return ($name);
 	}
-
-
 
 
 	/**
