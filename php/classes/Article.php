@@ -65,12 +65,13 @@ class Article implements \JsonSerializable{
 	 * @throws \TypeError if data types violate type hints
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newArticleId, $newArticleProfileId, string $newArticleContent, $newArticleDateTime = null) {
+	public function __construct($newArticleId, $newArticleProfileId, string $newArticleContent, $newArticleDateTime = null, string $newArticleTitle) {
 		try {
 			$this->setArticleId($newArticleId);
 			$this->setArticleProfileId($newArticleProfileId);
 			$this->setArticleContent($newArticleContent);
 			$this->setArticleDateTime($newArticleDateTime);
+			$this->setArticleTitle($newArticleTitle);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
@@ -260,7 +261,7 @@ class Article implements \JsonSerializable{
 		$statement = $pdo->prepare($query);
 
 		// binds binary value of articleId to placeholder for profileId
-		$parameters = ["profileId" => $this->profileId->getBytes()];
+		$parameters = ["articleId" => $this->articleId->getBytes()];
 		$statement->execute($parameters);
 	}
 
@@ -283,7 +284,47 @@ class Article implements \JsonSerializable{
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * gets article by article id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $articleId Article id to search by
+	 * @return Article|null Article found or null if not found
+	 * @throws \PDOException when mySQL related error occurs
+	 * @throws \TypeError when a variable is not the correct data type
+	 **/
+	public static function getArticleByArticleId(\PDO $pdo, $articleId): ?Article {
+		// sanitize the article id before searching
+		try {
+			$articleId = self::validateUuid($articleId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
 
+		// create query template
+		$query = "SELECT articleId, articleProfileId, articleContent, articleDateTime, articleTitle FROM article WHERE articleId = :articleId";
+
+		// stops direct access to database for formatting
+		$statement = $pdo->prepare($query);
+
+		// bind the profile id to the place holder in the template
+		$parameters = ["articleId" => $articleId->getBytes()];
+		$statement->execute($parameters);
+
+		// grab the profile from mySQL
+		try {
+			$article = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$article = new Article($row["articleId"], $row["articleProfileId"], $row["articleContent"], $row["articleDateTime"], $row["articleTitle"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow the exception
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($article);
+	}
 
 
 
