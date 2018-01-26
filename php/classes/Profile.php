@@ -312,7 +312,7 @@ class Profile implements \JsonSerializable {
 	public function delete(\PDO $pdo): void {
 
 		// create query template
-		$query = "DELETE FROM profile WHERE profileID = :profileId";
+		$query = "DELETE FROM profile WHERE profileId = :profileId";
 
 		// stops direct deletion
 		$statement = $pdo->prepare($query);
