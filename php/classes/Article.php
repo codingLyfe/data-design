@@ -392,12 +392,12 @@ class Article implements \JsonSerializable{
 		$query = "SELECT articleId, articleProfileId, articleContent, articleDateTime, articleTitle FROM article WHERE articleContent LIKE :articleContent";
 		$statement = $pdo->prepare($query);
 
-		// bind the tweet content to the place holder in the template
+		// bind the article content to the place holder in the template
 		$articleContent = "%$articleContent%";
 		$parameters = ["articleContent" => $articleContent];
 		$statement->execute($parameters);
 
-		// build an array of tweets
+		// build an array of articles
 		$articles = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
@@ -455,6 +455,38 @@ class Article implements \JsonSerializable{
 		}
 		return ($title);
 	}
+
+
+	/**
+	 * gets all Articles
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Articles found or null if none found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllArticles(\PDO $pdo) : \SPLFixedArray {
+		// create query template
+		$query = "SELECT articleId, articleProfileId, articleContent, articleDateTime, articleTitle FROM article";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// build an array of articles
+		$articles = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$article = new Article($row["articleId"], $row["articleProfileId"], $row["articleContent"], $row["articleDateTime"], $row["articleTitle"]);
+				$articles[$articles->key()] = $article;
+				$articles->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($articles);
+	}
+
 
 
 	/**
