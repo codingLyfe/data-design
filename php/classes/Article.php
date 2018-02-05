@@ -46,11 +46,7 @@ class Article implements \JsonSerializable{
 	 * @var string $articleTitle
 	 **/
 	private $articleTitle;
-	/**
-	 * accessor method for Article id
-	 *
-	 * @return Uuid value of Article id
-	 **/
+
 
 	/**
 	 * Constructor for article
@@ -78,7 +74,11 @@ class Article implements \JsonSerializable{
 		}
 	}
 
-
+	/**
+	 * accessor method for Article id
+	 *
+	 * @return Uuid value of Article id
+	 **/
 	public function getArticleId(): Uuid {
 		return ($this->articleId);
 	}
